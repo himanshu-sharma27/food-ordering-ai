@@ -1,13 +1,22 @@
 from fastapi import FastAPI
+
 from app.database.database import Base, engine
 from app.models.menu import MenuItem
-Base.metadata.create_all(bind=engine)
+from app.routers import menu_router
+from app.models.user import User
+from app.models.order import Order
+from app.models.order_item import OrderItem
 
 app = FastAPI(
     title="Food Ordering AI API",
     description="Backend API for the AI-powered Food Ordering System",
     version="1.0.0",
 )
+
+Base.metadata.create_all(bind=engine)
+
+
+app.include_router(menu_router.router)
 
 @app.get("/")
 def root():
