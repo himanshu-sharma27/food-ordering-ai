@@ -40,6 +40,10 @@ def update_menu(db: Session, menu_id: int, updated_menu: MenuUpdate):
 
     for key, value in updated_menu.model_dump().items():
         setattr(menu, key, value)
+    
+    if updated_menu.name or updated_menu.description:
+        text = f"{menu.name}. {menu.description}"
+        menu.embedding = json.dumps(generate_embedding(text))
 
     db.commit()
     db.refresh(menu)

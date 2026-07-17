@@ -11,6 +11,7 @@ from app.models.order_item import OrderItem
 
 from app.routers import order_router
 from app.routers import dashboard_router
+from app.routers import search_router
 
 app = FastAPI(
     title="Food Ordering AI API",
@@ -24,6 +25,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(menu_router.router)
 app.include_router(order_router.router)
 app.include_router(dashboard_router.router)
+app.include_router(search_router.router)
 
 @app.get("/")
 def root():
