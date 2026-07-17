@@ -1,10 +1,22 @@
+from app.schemas.menu import MenuCreate, MenuUpdate
 from sqlalchemy.orm import Session
 from app.models.menu import MenuItem
 from app.schemas.menu import MenuCreate
+import json
+
+from app.ai.embedding_service import generate_embedding
 
 
 def create_menu(db: Session, menu: MenuCreate):
-    db_menu = MenuItem(**menu.model_dump())
+    menu_data = menu.model_dump()
+
+    embedding = generate_embedding(
+    f"{menu.name}. {menu.description}"
+)
+    
+
+    menu_data["embedding"] = json.dumps(embedding)
+    db_menu = MenuItem(**menu_data)
 
     db.add(db_menu)
     db.commit()
