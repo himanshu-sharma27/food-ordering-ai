@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+
 function FoodCard({ food }) {
+    const { addToCart } = useContext(CartContext);
     return (
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
 
@@ -41,19 +45,16 @@ function FoodCard({ food }) {
                 </div>
 
                 <button
-                    className="
-                        w-full
-                        mt-6
-                        bg-orange-500
-                        hover:bg-orange-600
-                        text-white
-                        py-3
-                        rounded-xl
-                        transition
-                    "
-                >
-                    Add To Cart
-                </button>
+
+    onClick={() => addToCart(food)}
+
+    className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl transition"
+
+>
+
+    Add To Cart
+
+</button>
 
             </div>
 
