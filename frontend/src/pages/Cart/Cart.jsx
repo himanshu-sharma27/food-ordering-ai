@@ -1,14 +1,68 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import api from "../../services/api";
+
+
 
 function Cart() {
 
     const { cartItems, removeFromCart } = useContext(CartContext);
 
+    async function checkout() {
+
+    try {
+
+        const payload = {
+
+    customer_name: "Himanshu",
+
+    items: cartItems.map(item => ({
+
+        menu_item_id: item.id,
+
+        quantity: item.quantity
+
+    }))
+
+}
+
+        console.log("Checkout clicked");
+
+console.log(payload);
+
+        const response = await api.post(
+
+            "/orders/",
+
+            payload
+
+        );
+
+        alert("Order placed successfully!");
+        setCartItems([]);
+        navigate("/orders");
+
+        console.log(response.data);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
     const total = cartItems.reduce(
-        (sum, item) => sum + item.price,
-        0
-    );
+
+    (sum, item) =>
+
+        sum + item.price * item.quantity,
+
+    0
+
+);
 
     return (
         <div className="max-w-5xl mx-auto py-10 px-6">
@@ -43,8 +97,16 @@ function Cart() {
                                                 {item.name}
                                             </h2>
 
-                                            <p className="text-gray-600">
+                                             <p className="text-gray-600">
+
                                                 ₹{item.price}
+
+                                            </p>
+
+                                            <p className="text-orange-500">
+
+                                            Quantity: {item.quantity}
+
                                             </p>
 
                                         </div>
@@ -76,9 +138,15 @@ function Cart() {
                         </div>
 
                         <button
+
+                            onClick={checkout}
+
                             className="mt-8 w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-xl text-xl"
-                        >
-                            Proceed to Checkout
+
+                            >
+
+                            Proceed To Checkout
+
                         </button>
 
                     </>

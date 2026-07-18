@@ -22,7 +22,7 @@ function Home() {
 
         try {
 
-            const response = await api.get("/menu");
+            const response = await api.get("/menu/");
 
             setFoods(response.data);
 

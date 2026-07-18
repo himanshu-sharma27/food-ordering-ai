@@ -8,15 +8,46 @@ export function CartProvider({ children }) {
 
     function addToCart(food) {
 
-        setCartItems((previousItems) => [
+    setCartItems(previousItems => {
+
+        const existing = previousItems.find(
+            item => item.id === food.id
+        );
+
+        if (existing) {
+
+            return previousItems.map(item =>
+
+                item.id === food.id
+
+                    ? {
+                        ...item,
+                        quantity: item.quantity + 1
+                    }
+
+                    : item
+
+            );
+
+        }
+
+        return [
 
             ...previousItems,
 
-            food,
+            {
 
-        ]);
+                ...food,
 
-    }
+                quantity: 1
+
+            }
+
+        ];
+
+    });
+
+}
 
     function removeFromCart(id) {
 
