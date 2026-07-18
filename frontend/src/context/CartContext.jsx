@@ -59,6 +59,11 @@ export function CartProvider({ children }) {
 
     }
 
+    function clearCart() {
+    setCartItems([]);
+    
+}
+
     return (
 
         <CartContext.Provider
@@ -70,6 +75,8 @@ export function CartProvider({ children }) {
                 addToCart,
 
                 removeFromCart,
+
+                clearCart
 
             }}
 

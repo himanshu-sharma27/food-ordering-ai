@@ -1,12 +1,15 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 
 
 function Cart() {
 
-    const { cartItems, removeFromCart } = useContext(CartContext);
+    const { cartItems, removeFromCart , clearCart } = useContext(CartContext);
+    const navigate = useNavigate();
+    const customerName = "Himanshu";
 
     async function checkout() {
 
@@ -14,7 +17,7 @@ function Cart() {
 
         const payload = {
 
-    customer_name: "Himanshu",
+    customer_name: customerName,
 
     items: cartItems.map(item => ({
 
@@ -38,9 +41,11 @@ console.log(payload);
 
         );
 
+        clearCart();
+
         alert("Order placed successfully!");
-        setCartItems([]);
-        navigate("/orders");
+
+        navigate("/");
 
         console.log(response.data);
 
