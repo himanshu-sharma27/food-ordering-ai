@@ -2,11 +2,13 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
-from app.schemas.order import OrderCreate, OrderResponse
+from app.schemas.order import OrderCreate, OrderResponse, OrderStatusUpdate
 from app.services.order_service import (
     create_order,
     get_all_orders,
     get_order,
+    update_order_status,
+    
 )
 
 router = APIRouter(
@@ -36,3 +38,15 @@ def single_order(
     db: Session = Depends(get_db),
 ):
     return get_order(db, order_id)
+
+@router.patch("/{order_id}", response_model=OrderResponse)
+def update_status(
+    order_id: int,
+    order: OrderStatusUpdate,
+    db: Session = Depends(get_db),
+):
+    return update_order_status(
+        db,
+        order_id,
+        order,
+    )

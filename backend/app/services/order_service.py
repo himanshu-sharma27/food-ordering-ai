@@ -5,6 +5,7 @@ from app.models.menu import MenuItem
 from app.models.order import Order
 from app.models.order_item import OrderItem
 from app.schemas.order import OrderCreate
+from app.schemas.order import OrderStatusUpdate
 
 
 def create_order(db: Session, order: OrderCreate):
@@ -65,5 +66,41 @@ def get_order(db: Session, order_id: int):
             status_code=404,
             detail="Order not found"
         )
+
+    return order
+
+def update_order_status(
+    db: Session,
+    order_id: int,
+    order_update: OrderStatusUpdate
+):
+
+    order = db.query(Order).filter(
+        Order.id == order_id
+    ).first()
+
+    if not order:
+        raise HTTPException(
+            status_code=404,
+            detail="Order not found"
+        )
+
+    valid_statuses = [
+        "PLACED",
+        "PREPARING",
+        "OUT_FOR_DELIVERY",
+        "DELIVERED"
+    ]
+
+    if order_update.status not in valid_statuses:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid order status"
+        )
+
+    order.status = order_update.status
+
+    db.commit()
+    db.refresh(order)
 
     return order
