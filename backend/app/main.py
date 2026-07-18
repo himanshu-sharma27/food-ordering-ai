@@ -13,10 +13,23 @@ from app.routers import order_router
 from app.routers import dashboard_router
 from app.routers import search_router
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(
     title="Food Ordering AI API",
     description="Backend API for the AI-powered Food Ordering System",
     version="1.0.0",
+    
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 Base.metadata.create_all(bind=engine)
