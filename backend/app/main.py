@@ -26,7 +26,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
     "http://localhost:5173",
-    "https://YOUR_FRONTEND_URL.vercel.app"
+    "https://food-ordering-658owvhva-himanshu-sharma27s-projects.vercel.app/"
 ],
     allow_credentials=True,
     allow_methods=["*"],
