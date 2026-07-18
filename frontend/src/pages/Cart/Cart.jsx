@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 
@@ -43,7 +44,9 @@ console.log(payload);
 
         clearCart();
 
-        alert("Order placed successfully!");
+       
+
+        toast.success("Order placed successfully!");
 
         navigate("/");
 

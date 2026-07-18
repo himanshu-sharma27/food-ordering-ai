@@ -1,56 +1,61 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 
 function Navbar() {
+
     const { cartItems } = useContext(CartContext);
-    
+
     return (
-        <nav className="bg-white shadow-md">
+
+        <nav className="bg-white shadow-md sticky top-0 z-50">
+
             <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-                <Link
+                <NavLink
                     to="/"
-                    className="text-2xl font-bold text-orange-500"
+                    className="text-3xl font-bold text-orange-500"
                 >
                     🍕 FoodAI
-                </Link>
+                </NavLink>
 
                 <div className="flex gap-8">
 
-                    <Link
+                    <NavLink
                         to="/"
-                        className="hover:text-orange-500 transition"
+                        className={({ isActive }) =>
+                            isActive
+                                ? "text-orange-500 font-semibold"
+                                : "hover:text-orange-500"
+                        }
                     >
                         Home
-                    </Link>
+                    </NavLink>
 
-                    <Link
-                        to="/menu"
-                        className="hover:text-orange-500 transition"
+                    <NavLink
+                        to="/admin"
+                        className={({ isActive }) =>
+                            isActive
+                                ? "text-orange-500 font-semibold"
+                                : "hover:text-orange-500"
+                        }
                     >
-                        Menu
-                    </Link>
-
-                    <Link
-                        to="/orders"
-                        className="hover:text-orange-500 transition"
-                    >
-                        Orders
-                    </Link>
-
-                    <Link to="/admin" className="hover:text-orange-500">
-                    Admin
-                    </Link>
+                        Admin
+                    </NavLink>
 
                 </div>
 
-                <Link to="/cart" className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 transition">
-    Cart ({cartItems.length}) 
-    </Link>
+                <NavLink
+                    to="/cart"
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg transition"
+                >
+                    Cart ({cartItems.length})
+                </NavLink>
 
             </div>
+
         </nav>
+
     );
 }
 
