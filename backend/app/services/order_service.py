@@ -74,29 +74,21 @@ def update_order_status(
     order_id: int,
     order_update: OrderStatusUpdate
 ):
-
-    order = db.query(Order).filter(
-        Order.id == order_id
-    ).first()
+    order = db.query(Order).filter(Order.id == order_id).first()
 
     if not order:
-        raise HTTPException(
-            status_code=404,
-            detail="Order not found"
-        )
+        raise HTTPException(status_code=404, detail="Order not found")
 
     valid_statuses = [
-        "PLACED",
-        "PREPARING",
-        "OUT_FOR_DELIVERY",
-        "DELIVERED"
-    ]
+    "PLACED",
+    "CONFIRMED",
+    "PREPARING",
+    "READY",
+    "PICKED_UP"
+]
 
     if order_update.status not in valid_statuses:
-        raise HTTPException(
-            status_code=400,
-            detail="Invalid order status"
-        )
+        raise HTTPException(status_code=400, detail="Invalid status")
 
     order.status = order_update.status
 

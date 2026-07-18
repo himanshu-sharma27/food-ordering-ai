@@ -1,4 +1,8 @@
 from pydantic import BaseModel, Field
+from pydantic import BaseModel
+
+class OrderStatusUpdate(BaseModel):
+    status: str
 
 
 class OrderItemCreate(BaseModel):

@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from app.schemas.order import OrderStatusUpdate
+from app.services.order_service import update_order_status
 
 from app.database.database import get_db
 from app.schemas.order import OrderCreate, OrderResponse, OrderStatusUpdate
@@ -50,3 +52,11 @@ def update_status(
         order_id,
         order,
     )
+
+@router.patch("/{order_id}", response_model=OrderResponse)
+def update_status(
+    order_id: int,
+    order: OrderStatusUpdate,
+    db: Session = Depends(get_db),
+):
+    return update_order_status(db, order_id, order)

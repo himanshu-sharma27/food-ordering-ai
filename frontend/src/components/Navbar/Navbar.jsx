@@ -4,6 +4,7 @@ import { CartContext } from "../../context/CartContext";
 
 function Navbar() {
     const { cartItems } = useContext(CartContext);
+    
     return (
         <nav className="bg-white shadow-md">
             <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -38,11 +39,8 @@ function Navbar() {
                         Orders
                     </Link>
 
-                    <Link
-                        to="/admin"
-                        className="hover:text-orange-500 transition"
-                    >
-                        Admin
+                    <Link to="/admin" className="hover:text-orange-500">
+                    Admin
                     </Link>
 
                 </div>
