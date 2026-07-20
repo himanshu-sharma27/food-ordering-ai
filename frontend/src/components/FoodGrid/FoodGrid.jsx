@@ -4,7 +4,10 @@ function FoodGrid({ foods }) {
 
     return (
 
-        <section className="max-w-7xl mx-auto px-6 py-16">
+        <section
+    id="menu"
+    className="max-w-7xl mx-auto px-6 py-16"
+>
 
             <h2 className="text-4xl font-bold mb-10">
                 Popular Foods

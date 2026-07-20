@@ -3,6 +3,7 @@ import { CartContext } from "../../context/CartContext";
 
 function FoodCard({ food }) {
     const { addToCart } = useContext(CartContext);
+    
     return (
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
 

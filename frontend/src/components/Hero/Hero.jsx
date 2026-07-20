@@ -14,20 +14,17 @@ function Hero() {
                 </p>
 
                 <button
-                    className="
-                        mt-10
-                        bg-white
-                        text-orange-600
-                        px-8
-                        py-4
-                        rounded-xl
-                        font-semibold
-                        hover:bg-orange-100
-                        transition
-                    "
-                >
-                    Browse Menu
-                </button>
+    onClick={() =>
+        document
+            .getElementById("menu")
+            ?.scrollIntoView({
+                behavior: "smooth",
+            })
+    }
+    className="bg-white text-orange-500 px-10 py-4 mt-5 rounded-xl font-semibold hover:bg-gray-100 transition"
+>
+    Browse Menu
+</button>
 
             </div>
 
