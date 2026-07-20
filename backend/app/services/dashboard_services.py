@@ -20,15 +20,9 @@ def get_dashboard(db: Session):
     for status, count in statuses:
         orders_by_status[str(status)] = count
 
-    today = date.today()
-
     revenue = db.query(
-        func.sum(Order.total_price)
-    ).filter(
-        func.date(Order.created_at) == today
-    ).scalar()
-
-    revenue = revenue or 0
+    func.sum(Order.total_price)
+).scalar() or 0
 
     popular_items = (
         db.query(
@@ -45,14 +39,17 @@ def get_dashboard(db: Session):
         .all()
     )
 
+    total_orders = db.query(func.count(Order.id)).scalar() or 0
+
     return {
-        "orders_by_status": orders_by_status,
-        "today_revenue": revenue,
-        "popular_items": [
-            {
-                "name": item.name,
-                "orders": item.total
-            }
-            for item in popular_items
-        ]
-    }
+    "today_revenue": revenue,
+    "total_orders": total_orders,
+    "orders_by_status": orders_by_status,
+    "popular_items": [
+        {
+            "name": item.name,
+            "orders": item.total
+        }
+        for item in popular_items
+    ]
+}
