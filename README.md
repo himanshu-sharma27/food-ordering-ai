@@ -125,8 +125,7 @@ The AI understands the meaning behind the query and recommends the most relevant
 # 📂 Project Structure
 
 ```text
-FOOD-ORDERING-AI
-│
+food-ordering-ai
 ├── backend
 │   ├── app
 │   │   ├── ai
@@ -140,24 +139,158 @@ FOOD-ORDERING-AI
 │   │   ├── config.py
 │   │   ├── main.py
 │   │   └── __init__.py
-│   │
-│   ├── food_ordering.db
 │   ├── requirements.txt
 │   ├── runtime.txt
-│   ├── render.yaml
-│   └── .env
+│   └── render.yaml
 │
 ├── frontend
 │   ├── public
 │   ├── src
+│   │   ├── components
+│   │   ├── context
+│   │   ├── pages
+│   │   ├── services
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │   ├── package.json
-│   ├── vite.config.js
-│   └── .env
+│   └── vite.config.js
 │
 ├── docs
+│   ├── home.png
+│   ├── ai-search.png
+│   ├── admin-dashboard.png
+│   ├── cart.png
+│   └── menu-management.png
 │
 └── README.md
 ```
+
+---
+
+---
+
+# 🤖 AI Semantic Search
+
+FoodAI uses **Sentence Transformers** to understand the *meaning* of a user's query rather than relying on exact keyword matches.
+
+### Embedding Model
+
+The application uses
+
+> **all-MiniLM-L6-v2**
+
+This lightweight transformer model converts every menu item's name and description into dense vector embeddings.
+
+Example
+
+```
+Paneer Pizza
+↓
+
+[0.23, -0.51, 0.88, ...]
+```
+
+User queries are also converted into embeddings.
+
+```
+"I want something spicy"
+
+↓
+
+[0.19, -0.47, 0.92, ...]
+```
+
+The system then computes **Cosine Similarity** between the query embedding and every menu item embedding to find the most semantically relevant dishes.
+
+### AI Search Pipeline
+
+```
+User Query
+      │
+      ▼
+Sentence Transformer
+(all-MiniLM-L6-v2)
+      │
+      ▼
+Query Embedding
+      │
+      ▼
+Cosine Similarity
+      │
+      ▼
+Rank Menu Items
+      │
+      ▼
+Return Top Results
+```
+
+This allows users to search naturally instead of remembering exact menu names.
+
+Example searches:
+
+- "Show me something spicy"
+- "Healthy vegetarian food"
+- "Cheesy pizza"
+- "Quick snacks"
+- "Chocolate desserts"
+
+The AI understands the intent behind the query and recommends the closest matching dishes.
+
+---
+
+---
+
+# 🏛 Backend Architecture
+
+The backend follows a layered architecture to keep the code modular and maintainable.
+
+```
+Client (React)
+
+↓
+
+Routers
+(API Endpoints)
+
+↓
+
+Services
+(Business Logic)
+
+↓
+
+Models
+(SQLAlchemy ORM)
+
+↓
+
+SQLite Database
+```
+
+### Responsibilities
+
+**Routers**
+- Handle HTTP requests
+- Validate incoming data
+- Call service layer
+
+**Services**
+- Business logic
+- CRUD operations
+- AI search
+- Dashboard analytics
+
+**Models**
+- SQLAlchemy ORM models
+- Database schema
+
+**Schemas**
+- Pydantic validation
+- Request/Response models
+
+**AI Module**
+- Embedding generation
+- Semantic similarity search
 
 ---
 
@@ -289,18 +422,19 @@ http://localhost:5173
 
 ---
 
-# 🚀 Future Enhancements
+# 🚀 Future Improvements
 
 - JWT Authentication
-- Payment Gateway Integration
+- User Accounts
+- Online Payment Integration (Stripe/Razorpay)
+- Restaurant Image Uploads
+- Personalized Food Recommendations
 - Order History
-- Customer Authentication
-- Restaurant Images
 - Live Order Tracking
-- Ratings & Reviews
-- Recommendation Engine
+- Customer Ratings & Reviews
 - Email Notifications
-- Docker Deployment
+- Docker Containerization
+- CI/CD Pipeline using GitHub Actions
 
 ---
 
